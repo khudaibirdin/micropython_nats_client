@@ -3,6 +3,7 @@ import usocket as socket
 
 def with_connection(func):
     """Connecting/disconnecting to NATS"""
+
     def wrapper(self, *args, **kwargs):
         try:
             self._connect()
@@ -23,7 +24,7 @@ def with_connection(func):
             return func(self, *args, **kwargs)
         finally:
             self._disconnect()
-   
+
     return wrapper
 
 
@@ -41,7 +42,7 @@ class Connection:
         except Exception as error:
             print(f"[Connection][error] NATS PUB command error: {error}")
             return
-        
+
         try:
             self._send_msg(msg)
             print("[Connection][info] Sent NATS payload")
@@ -67,10 +68,9 @@ class Connection:
         if not sent_bytes or sent_bytes == 0:
             raise MessageSendError()
 
+
 class MessageSendError(Exception):
-    """Socket send receive 0"""
     message = "Socket send receive 0"
+
     def __init__(self):
         super().__init__(self.message)
-    pass
-    
