@@ -62,5 +62,15 @@ class Connection:
         connect_cmd = b'CONNECT {"verbose":false,"pedantic":false}\r\n'
         self._send_msg(connect_cmd)
 
-    def _send_msg(self, msg: bytes):
-        self.socket.send(msg)
+    def _send_msg(self, msg: bytes) -> int:
+        sent_bytes = self.socket.send(msg)
+        if not sent_bytes or sent_bytes == 0:
+            raise MessageSendError()
+
+class MessageSendError(Exception):
+    """Socket send receive 0"""
+    message = "Socket send receive 0"
+    def __init__(self):
+        super().__init__(self.message)
+    pass
+    
