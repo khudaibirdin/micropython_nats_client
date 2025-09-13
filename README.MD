@@ -25,6 +25,6 @@ np = Publisher(
 
 np.send(
     topic="test",
-    msg=f"Test message #{cycle_index}"
+    msg=f"Test message"
 )
 ```
